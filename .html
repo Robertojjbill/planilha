@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Imagem</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <? var sheet = SpreadsheetApp.getActive().getActiveSheet(); ?>
+        <? var data = sheet.getDataRange().getValues(); ?>
+        <? for (var i = 1; i < data.length; i++) { ?>
+          <tr>
+            <td><?= data[i][0] ?></td>
+            <td><?= data[i][1] ?></td>
+            <td><img src="<?= data[i][2] ?>"></td>
+            <td><?= data[i][3] ?></td>
+          </tr>
+        <? } ?>
+      </tbody>
+    </table>
+
+    <form id="form">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome"><br><br>
+      <label for="telefone">Telefone:</label>
+      <input type="text" id="telefone" name="telefone"><br><br>
+      <label for="imagem">Imagem:</label>
+      <input type="text" id="imagem" name="imagem"><br><br>
+      <label for="valor">Valor:</label>
+      <input type="text" id="valor" name="valor"><br><br>
+      <input type="button" value="Adicionar" onclick="addRow()">
+    </form>
+
+    <script>
+      function addRow() {
+        google.script.run.addRow(
+          document.getElementById("nome").value,
+          document.getElementById("telefone").value,
+          document.getElementById("imagem").value,
+          document.getElementById("valor").value
+        );
+        document.getElementById("form").reset();
+        location.reload();
+      }
+    </script>
+  </body>
+</html>
